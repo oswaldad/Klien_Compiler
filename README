@@ -10,7 +10,18 @@ Scanner:
 		TokenKlein.py - This file creates a token class which we use to store what 
 			type of token one is and its value (if necessary).
 
+To run the Scanner:
+	Navigate in the command line to the main directory.
 
-This compiler has no KNOWN bugs at the moment.
+	Type: chmod +x kliens
+
+	To run klien: ./kliens /programs/(path_of_file)
+
+	The UNIX executable, kliens, only works on the mac Os. We have included an UNIX executable that works on Linux, see the misc directory. Furthermore, see the kliens.py file in misc that was used to create each executable.
+
+
+This compiler has no KNOWN bugs at the moment. 
+
 This compiler supports the full Klein language.
+
 Optimizations are inapplicable at this time.

@@ -1,0 +1,8 @@
+﻿Operator:= + | - | * | / | < | =
+Punct:= ( | ) | , | :
+Number:= 0 | [1-9][0-9]*
+Keywords:= integer | boolean | if | then | else | not | and | or | function
+Identifiers:= [a-z A-Z][a-z A-Z | _ | (0-9) ]*    
+EOF:= \eof
+Boolean:= true | false
+
