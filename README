@@ -1,0 +1,16 @@
+The Cobras - Drake Oswald, Reed Christensen, Caiden Hauser
+
+This project is the creation of a compiler for the simple language, Klein.  So far, the 
+scanner is the only piece of the compiler we have written.
+
+Scanner:
+	Our files consist of...
+		Scanner.py - This file contains the code to produce a list of tokens, 
+			including the functions next() and peek().
+		TokenKlein.py - This file creates a token class which we use to store what 
+			type of token one is and its value (if necessary).
+
+
+This compiler has no KNOWN bugs at the moment.
+This compiler supports the full Klein language.
+Optimizations are inapplicable at this time.

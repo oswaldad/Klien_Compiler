@@ -1,0 +1,18 @@
+(*  This program returns euler's number using the given value as n 
+ *  and returns 0 if the input is invalid                      *)
+
+function main ( elementWanted : integer ) : integer
+  if elementWanted < 1 then
+     0
+  else
+     power(1+1/elementWanted , elementWanted)
+
+function power( element : integer,
+		elementAgain : integer,
+                exponent : integer) : integer
+  if exponent = 0 then
+     elementAgain
+  else
+     power( element,
+	    element * elementAgain,
+            exponent - 1 )

@@ -1,0 +1,7 @@
+﻿Notes on the DFA’s:
+
+The shorthand notation, !* and !), is used to denote any character that is not specified.
+So, !* denotes any character that is not a *. 
+Furthermore, !) denotes any character that is not a ).
+
+The files in FA_JFLAP are .jff extension and need to be loaded by JFLAP. They are intended for personal use only.
