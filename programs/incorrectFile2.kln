@@ -1,0 +1,7 @@
+(* Missing parenthesis in the main function *)
+
+function main ( element : integer  : integer
+	if element < 0 then
+		-element
+	else
+		element

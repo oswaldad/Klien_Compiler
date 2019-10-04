@@ -200,6 +200,7 @@ class Scanner:
                 raise TypeError(errorMessage.format(state))
 
         tokens.append(Token(TokenType.eof))
+        self.tokens = tokens
         return tokens
 
     def next(self):
@@ -208,6 +209,7 @@ class Scanner:
         return nextToken
     
     def peek(self):
+      #  print(self.pos, len(self.tokens))
         return self.tokens[self.pos]
     
 def print_one(klienProgram):
@@ -219,15 +221,11 @@ def print_one(klienProgram):
     for token in tokens:
         print(token)
 
-"""
-#used for testing
-
 if __name__ == '__main__':
     try:
-        print_one()
+        print_one('klein-programs/factors.kln')
     except TypeError as err:
         print(err)
     except ValueError as err:
         print(err)
-"""
     

@@ -1,0 +1,19 @@
+(* fibonacci incorrect if then else *)
+
+function main ( elementWanted : integer ) : integer
+  if elementWanted < 1
+     0
+  else
+     addNext(1, elementWanted, 0, 1)
+
+function addNext(currentElement : integer,
+                 elementWanted  : integer,
+                 previousSum    : integer,
+                 currentSum     : integer  ) : integer
+  if elementWanted = currentElement then
+     currentSum
+  else
+     addNext( currentElement + 1,
+              elementWanted,
+              currentSum,
+              previousSum + currentSum )

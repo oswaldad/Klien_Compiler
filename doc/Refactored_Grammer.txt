@@ -1,0 +1,157 @@
+  
+
+
+            <PROGRAM> ::= <DEFINITIONS>
+
+        <DEFINITIONS> ::= ε
+                        | <DEF> <DEFINITIONS>
+
+                <DEF> ::= function <IDENTIFIER> ( <FORMALS> ) : <TYPE>
+                             <BODY>
+
+            <FORMALS> ::= ε
+                        | <NONEMPTYFORMALS>
+
+    <NONEMPTYFORMALS> ::= <FORMAL> <NONEMPTYFORMAL-TAIL>
+                        
+
+ <NONEMPTYFORMAL-TAIL> ::= , <NONEMPTYFORMAL>
+			| ε
+
+             <FORMAL> ::= <IDENTIFIER> : <TYPE>
+
+               <BODY> ::= <PRINT-STATEMENT> <BODY>
+                        | <EXPR>
+
+               <TYPE> ::= integer
+                        | boolean
+
+	       <EXPR> ::= <SIMPLE-EXPR> <EXPR-TAIL>
+
+	  <EXPR-TAIL> ::= < <EXPR>
+		        | = <EXPR>
+		        | ε 
+
+        <SIMPLE-EXPR> ::= <TERM> <SIMPLE-EXPR-TAIL>
+  
+
+   <SIMPLE-EXPR-TAIL> ::= or <SIMPLE-EXPR>
+		        | + <SIMPLE-EXPR>
+		        | - <SIMPLE-EXPR>
+			| ε
+
+	       <TERM> ::= <FACTOR> <TERM-TAIL>
+
+	  <TERM-TAIL> ::= and <TERM>
+		        | * <TERM>
+		        | / <TERM>
+		        | ε
+
+             <FACTOR> ::= if <EXPR> then <EXPR> else <EXPR>
+                        | not <FACTOR>
+                        | <IDENTIFIER> <FACTOR-TAIL>
+                        | <LITERAL>
+                        | - <FACTOR>
+                        | ( <EXPR> )
+
+	<FACTOR-TAIL> ::= ( <ACTUALS> )
+			| ε
+
+            <ACTUALS> ::= ε
+                        | <NONEMPTYACTUALS>
+
+    <NONEMPTYACTUALS> ::= <EXPR> <NONEMPTYACT-TAIL>
+
+   <NONEMPTYACT-TAIL> ::= , <NONEMPTYACTUALS>
+			| ε
+
+            <LITERAL> ::= <NUMBER>
+                        | <BOOLEAN>
+
+    <PRINT-STATEMENT> ::= print ( <EXPR> )
+
+
+
+List of Changes
+	Change 1:
+    	<NONEMPTYFORMALS> ::= <FORMAL>
+                            | <FORMAL> , <NONEMPTYFORMALS>
+
+	Refactored To:
+	<NONEMPTYFORMALS> ::= <FORMAL> <NONEMPTYFORMAL-TAIL>
+                        
+
+ 	<NONEMPTYFORMAL-TAIL> ::= , <NONEMPTYFORMAL>
+				| ε
+
+
+	Change 2:
+        <EXPR> ::= <EXPR> < <SIMPLE-EXPR>
+                 | <EXPR> = <SIMPLE-EXPR>
+                 | <SIMPLE-EXPR>
+
+	Refactored To:
+	<EXPR> ::= <SIMPLE-EXPR> <EXPR-TAIL>
+
+	<EXPR-TAIL> ::= < <EXPR>
+		      | = <EXPR>
+		      | ε
+
+	Change 3:
+        <SIMPLE-EXPR> ::= <SIMPLE-EXPR> or <TERM>
+                        | <SIMPLE-EXPR> + <TERM>
+                        | <SIMPLE-EXPR> - <TERM>
+                        | <TERM>
+
+	Refactored To:
+        <SIMPLE-EXPR> ::= <TERM> <SIMPLE-EXPR-TAIL>
+  
+
+   	<SIMPLE-EXPR-TAIL> ::= or <SIMPLE-EXPR>
+		             | + <SIMPLE-EXPR>
+		             | - <SIMPLE-EXPR>
+			     | ε
+
+	Change 4:
+        <TERM> ::= <TERM> and <FACTOR>
+                 | <TERM> * <FACTOR>
+                 | <TERM> / <FACTOR>
+                 | <FACTOR>
+
+	Refactored To:
+	<TERM> ::= <FACTOR> <TERM-TAIL>
+
+	<TERM-TAIL> ::= and <TERM>
+		      | * <TERM>
+		      | / <TERM>
+		      | ε
+
+	Change 5:
+        <FACTOR> ::= if <EXPR> then <EXPR> else <EXPR>
+                   | not <FACTOR>
+                   | <IDENTIFIER> ( <ACTUALS> )
+                   | <IDENTIFIER>
+                   | <LITERAL>
+                   | - <FACTOR>
+                   | ( <EXPR> )
+
+	Refactored To:
+        <FACTOR> ::= if <EXPR> then <EXPR> else <EXPR>
+                   | not <FACTOR>
+                   | <IDENTIFIER> <FACTOR-TAIL>
+                   | <LITERAL>
+                   | - <FACTOR>
+                   | ( <EXPR> )
+
+	<FACTOR-TAIL> ::= ( <ACTUALS> )
+			| ε
+
+	Change 6:
+    	<NONEMPTYACTUALS> ::= <EXPR>
+                            | <EXPR> , <NONEMPTYACTUALS>
+
+	Refactored To:
+    	<NONEMPTYACTUALS> ::= <EXPR> <NONEMPTYACT-TAIL>
+
+   	<NONEMPTYACT-TAIL> ::= , <NONEMPTYACTUALS>
+			     | ε

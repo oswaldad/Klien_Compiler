@@ -1,0 +1,47 @@
+
+first(PRINT-STATEMENT) = {print}
+first(LITERAL) = {NUMBER, BOOLEAN}
+first(NONEMPTYACT-TAIL) = {"," , ε}
+first(NONEMPTYACTUALS) = {if, not, IDENTIFIER, NUMBER, BOOLEAN, - , (}
+first(ACTUALS) = {ε, if, not, IDENTIFIER, NUMBER, BOOLEAN, - , (}
+first(FACTOR-TAIL) = {(, ε}
+first(FACTOR) = {if, not, IDENTIFIER, NUMBER, BOOLEAN, - , (}
+first(TERM-TAIL) = {and, *, /, ε}
+first(TERM) = {if, not, IDENTIFIER, NUMBER, BOOLEAN, - , (}
+first(SIMPLE-EXPR-TAIL) = {or, +, -, ε}
+first(SIMPLE-EXPR) = {if, not, IDENTIFIER, NUMBER, BOOLEAN, - , (}
+first(EXPR-TAIL) = {<, =, ε}
+first(EXPR) = {if, not, IDENTIFIER, NUMBER, BOOLEAN, - , (}
+first(TYPE) = {integer, boolean}
+first(BODY) = {print, if, not, IDENTIFIER, NUMBER, BOOLEAN, -, (}
+first(FORMAL) = {IDENTIFIER}
+first(NONEMPTYFORMAL-TAIL) = {"," , ε}
+first(NONEMPTYFORMALS) = {IDENTIFIER}
+first(FORMALS) = {ε, IDENTIFIER}
+first(DEF) = {function}
+first(DEFINITIONS) = {ε, function}
+first(PROGRAM) = {ε, function}
+
+
+follow(PROGRAM) = {$}
+follow(DEFINITIONS) = {$}
+follow(DEF) = {function, $}
+follow(FORMALS) = {)}
+follow(NONEMPTYFORMALS) = {)}
+follow(NONEMPTYFORMAL-TAIL) = {)}
+follow(FORMAL) = {",", )}
+follow(BODY) = {function, $}
+follow(TYPE) = {print, if, not, IDENTIFIER, NUMBER, BOOLEAN, -, (, ), ","}
+follow(EXPR) = {function, $, <, = , then, else, or, +, -, and, *, /, ), ","}
+follow(EXPR-TAIL) = {function, $, <, = , then, else, or, +, -, and, *, /, ), ","}
+follow(SIMPLE-EXPR) = {function, $, <, = , then, else, or, +, -, and, *, /, ), ","}
+follow(SIMPLE-EXPR-TAIL) = {function, $, <, = , then, else, or, +, -, and, *, /, ), ","}
+follow(TERM) = {function, $, <, = , then, else, or, +, -, and, *, /, ), ","}
+follow(TERM-TAIL) = {function, $, <, = , then, else, or, +, -, and, *, /, ), ","}
+follow(FACTOR) = {function, $, <, = , then, else, or, +, -, and, *, /, ), ","}
+follow(FACTOR-TAIL) = {function, $, <, = , then, else, or, +, -, and, *, /, ), ","}
+follow(ACTUALS) = {)}
+follow(NONEMPTYACTUAlS) = {)}
+follow(NONEMPTYACT-TAIL) = {)}
+follow(LITERAL) = {function, $, <, =, or, +, -, and, *, /, then, else, ), ","}
+follow(PRINT-STATEMENT) = {print, if, not, IDENTIFIER, -, (, NUMBER, BOOLEAN}

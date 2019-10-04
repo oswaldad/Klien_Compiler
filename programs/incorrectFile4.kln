@@ -1,0 +1,13 @@
+(* semicolon instead of colon in function *)
+
+function main ( element : integer ) : boolean
+	divisibleByTwo(element)
+	
+function divisibleByTwo ( n : integer ) : boolean
+	if ( MOD(n,2) = 0 ) then 
+		true
+	else
+		false
+
+function MOD( m : integer, n ; integer ) : integer
+	m - m/n * n
