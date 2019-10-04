@@ -182,8 +182,6 @@ class Parser:
         stack = []
         pushRule( [ NonTerminal.PROGRAM, Token(TokenType.eof) ], stack)
         while stack:
-        #    print("Stack = " + str(stack))
-       #     print("NextToken = " + str(self.scanner.peek()))
             tos = top(stack) 
             if isinstance(tos, Token):
                 token = self.scanner.next()
@@ -192,21 +190,21 @@ class Parser:
                     if tos.value() == token.value():
                         pop(stack)
                     else:
-                        errorMessage = 'Error: Expected  {}  but received {}'
-                        raise TypeError(errorMessage.format(tos.value(), token.value()))
+                        errorMessage = 'Error line {}: Expected  {}  but received {}'
+                        raise TypeError(errorMessage.format(token.getLineNumber(), tos.value(), token.value()))
                 # Checking if an identifier is print. Used in the print-statement rule.
                 elif token.value() == "print":
                     if tos.value() == token.value():
                         pop(stack)
                     else:
-                        errorMessage = 'Error: Expected  {}  but received {}'
-                        raise TypeError(errorMessage.format(tos.value(), token.value()))
+                        errorMessage = 'Error line {}: Expected  {}  but received {}'
+                        raise TypeError(errorMessage.format(token.getLineNumber(), tos.value(), token.value()))
                 # Checking if tokenTypes are the same. Used for Numbers, EOF, Booleans, and identifiers that are not print.
                 elif tos.getTokenType() == token.getTokenType():
                     pop(stack)
                 else:
-                    errorMessage = 'Error: Expected  {}  but received {}'
-                    raise TypeError(errorMessage.format(tos.getTokenType(), token.getTokenType()))
+                    errorMessage = 'Error line {}: Expected  {}  but received {}'
+                    raise TypeError(errorMessage.format(token.getLineNumber(), tos.getTokenType(), token.getTokenType()))
 
             elif isinstance(tos, NonTerminal):
                 token = self.scanner.peek()
@@ -221,8 +219,8 @@ class Parser:
                     pop(stack)
                     pushRule(rule, stack)
                 else:
-                    errorMessage = 'Error: {} cannot be expanded on by {}'
-                    raise TypeError(errorMessage.format(tos, token))
+                    errorMessage = 'Error line {}: {} cannot be expanded on by {}'
+                    raise TypeError(errorMessage.format(token.getLineNumber(), tos, token))
             else:
                 errorMessage = 'invalid item on stack: {}'
                 raise TypeError(errorMessage.format(tos))
@@ -244,7 +242,7 @@ def testParser(klienProgram):
 
 if __name__ == '__main__':
     try:
-        testParser('klein-programs/farey.kln')
+        testParser('klein-programs/sieve.kln')
     except TypeError as err:
         print(err)
         

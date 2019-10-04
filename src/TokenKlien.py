@@ -11,9 +11,10 @@ class TokenType(Enum):
 
 class Token:
 
-    def __init__(self, tokenType, tokenValue = None):
+    def __init__(self, tokenType, tokenValue = None, lineNumber = None):
         self.tokenType = tokenType
         self.tokenValue = tokenValue
+        self.lineNumber = lineNumber
     
     def isOperator(self):
         return self.tokenType == TokenType.operator
@@ -39,6 +40,12 @@ class Token:
     def value(self):
         return self.tokenValue
 
+    def getTokenType(self):
+        return self.tokenType
+    
+    def getLineNumber(self):
+        return self.lineNumber
+
     def __repr__(self):
         if self.isOperator():
             return "Operator = " + self.tokenValue
@@ -54,3 +61,6 @@ class Token:
             return "Boolean = " + self.tokenValue
         else:
             return "End of File"
+    
+    def __eq__(self, other) : 
+        return self.getTokenType() == other.getTokenType() and self.value() == other.value()

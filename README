@@ -1,23 +1,31 @@
 The Cobras - Drake Oswald, Reed Christensen, Caiden Hauser
 
 This project is the creation of a compiler for the simple language, Klein.  So far, the 
-scanner is the only piece of the compiler we have written.
+scanner has been implemented in tendem with the first section of the parser. As of now, the 
+parser regonizes if a given program is syntactically correct.
 
-Scanner:
+Src:
 	Our files consist of...
 		Scanner.py - This file contains the code to produce a list of tokens, 
 			including the functions next() and peek().
+
 		TokenKlein.py - This file creates a token class which we use to store what 
 			type of token one is and its value (if necessary).
 
-To run the Scanner:
+		Parser.py - This file contains code that checks the syntax of the 
+			list of tokens that is produced in scanner
+
+Implemented for this Step:
+		We created the a parser that takes checks if a klein is legal, syntactically.
+		In doing so, it expands upon each token by using a parsing table. The next
+		step will be to expand this parser to create an abstract syntax tree.
+
+To run the Parser:
 	Navigate in the command line to the main directory.
 
-	Type: chmod +x kliens
+	Type: chmod +x klienf
 
 	To run klien: ./kliens /programs/(path_of_file)
-
-	The UNIX executable, kliens, only works on the mac Os. We have included an UNIX executable that works on Linux, see the misc directory. Furthermore, see the kliens.py file in misc that was used to create each executable.
 
 
 This compiler has no KNOWN bugs at the moment. 

@@ -39,9 +39,9 @@ class Scanner:
                         lineCounter += 1
                     pass
                 elif programStr[strPos] in operators:
-                    tokens.append(Token(TokenType.operator,programStr[strPos]))
+                    tokens.append(Token(TokenType.operator,programStr[strPos],lineCounter))
                 elif programStr[strPos] in "),:":
-                    tokens.append(Token(TokenType.punct,programStr[strPos]))
+                    tokens.append(Token(TokenType.punct,programStr[strPos],lineCounter))
                 elif programStr[strPos] in "0":
                     accum = programStr[strPos]
                     state = State.zero
@@ -56,7 +56,7 @@ class Scanner:
                         state = State.comment
                         strPos += 1
                     else:
-                        tokens.append(Token(TokenType.punct,programStr[strPos]))
+                        tokens.append(Token(TokenType.punct,programStr[strPos],lineCounter))
                 else: #Character not exceptable in the language
                     errorMessage = 'Error line {} : Invalid character in program {}'
                     raise ValueError(errorMessage.format(lineCounter, programStr[strPos]))
@@ -66,9 +66,9 @@ class Scanner:
                 if programStr[strPos].isspace():
                     if programStr[strPos] == "\n":
                         lineCounter += 1
-                    tokens.append(Token(TokenType.number, int(accum)))
+                    tokens.append(Token(TokenType.number, int(accum),lineCounter))
                 elif programStr[strPos] in (operators + punct):
-                    tokens.append(Token(TokenType.number, int(accum)))
+                    tokens.append(Token(TokenType.number, int(accum),lineCounter))
                     strPos -= 1
                 elif programStr[strPos].isdigit():
                     errorMessage = 'Error line {} : Numbers cannot have a leading 0: 0{}'
@@ -88,7 +88,7 @@ class Scanner:
                     if programStr[strPos] == "\n":
                         lineCounter += 1
                     if int(accum) <= 2147483647:
-                        tokens.append(Token(TokenType.number, int(accum)))
+                        tokens.append(Token(TokenType.number, int(accum),lineCounter))
                         accum = ""
                         state = State.start
                         strPos += 1
@@ -97,7 +97,7 @@ class Scanner:
                         raise TypeError(errorMessage.format(lineCounter, accum))
                 elif programStr[strPos] in (operators + punct):
                     if int(accum) <= 2147483647:
-                        tokens.append(Token(TokenType.number, int(accum)))
+                        tokens.append(Token(TokenType.number, int(accum),lineCounter))
                         accum = ""
                         state = State.start
                     else:
@@ -118,13 +118,13 @@ class Scanner:
                         if accum in keywords:
                             type = keywords[accum]
                             if type == "Keyword":
-                                tokens.append(Token(TokenType.keyword, accum))
+                                tokens.append(Token(TokenType.keyword, accum,lineCounter))
                             elif type == "Boolean":
-                                tokens.append(Token(TokenType.boolean, accum))
+                                tokens.append(Token(TokenType.boolean, accum,lineCounter))
                             else:
-                                tokens.append(Token(TokenType.identifier, accum))
+                                tokens.append(Token(TokenType.identifier, accum,lineCounter))
                         else:
-                            tokens.append(Token(TokenType.identifier, accum))
+                            tokens.append(Token(TokenType.identifier, accum,lineCounter))
                     else:
                         errorMessage = 'Error line {} : String cannot be over 256 characters {}'
                         raise TypeError(errorMessage.format(lineCounter, accum))
@@ -136,14 +136,13 @@ class Scanner:
                         if accum in keywords:
                             type = keywords[accum]
                             if type == "Keyword":
-                                tokens.append(Token(TokenType.keyword, accum))
+                                tokens.append(Token(TokenType.keyword, accum,lineCounter))
                             elif type == "Boolean":
-                                tokens.append(Token(TokenType.boolean, accum))
+                                tokens.append(Token(TokenType.boolean, accum,lineCounter))
                             else:
-                                tokens.append(Token(TokenType.identifier, accum))
+                                tokens.append(Token(TokenType.identifier, accum,lineCounter))
                         else:
-                            #TBD add identifier to keywords dictionary
-                            tokens.append(Token(TokenType.identifier, accum))
+                            tokens.append(Token(TokenType.identifier, accum,lineCounter))
                     else:
                         errorMessage = 'Error line {} : String cannot be over 256 characters {}'
                         raise TypeError(errorMessage.format(lineCounter, accum))
@@ -168,10 +167,10 @@ class Scanner:
         #Handles accum at the end of the file
         if accum != "":
             if state == State.zero:
-                tokens.append(Token(TokenType.number, int(accum)))
+                tokens.append(Token(TokenType.number, int(accum),lineCounter))
             elif state == State.number:
                 if int(accum) <= 2147483647:
-                    tokens.append(Token(TokenType.number, int(accum)))
+                    tokens.append(Token(TokenType.number, int(accum),lineCounter))
                 else:
                     errorMessage = 'Error line {} : Number cannot be over 2^31 - 1 {}'
                     raise TypeError(errorMessage.format(lineCounter, accum))
@@ -180,14 +179,14 @@ class Scanner:
                     if accum in keywords:
                         type = keywords[accum]
                         if type == "Keyword":
-                            tokens.append(Token(TokenType.keyword, accum))
+                            tokens.append(Token(TokenType.keyword, accum,lineCounter))
                         elif type == "Boolean":
-                            tokens.append(Token(TokenType.boolean, accum))
+                            tokens.append(Token(TokenType.boolean, accum,lineCounter))
                         else:
-                            tokens.append(Token(TokenType.identifier, accum))
+                            tokens.append(Token(TokenType.identifier, accum,lineCounter))
                     else:
                         #TBD add identifier to keywords dictionary
-                        tokens.append(Token(TokenType.identifier, accum))
+                        tokens.append(Token(TokenType.identifier, accum,lineCounter))
                 else:
                     errorMessage = 'Error line {} : String cannot be over 256 characters {}'
                     raise TypeError(errorMessage.format(lineCounter, accum))
