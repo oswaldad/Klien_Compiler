@@ -1,0 +1,90 @@
+  
+
+
+            <PROGRAM> ::= <DEFINITIONS> make-program
+
+        <DEFINITIONS> ::= make-definitions
+                        | <DEF> <DEFINITIONS>
+
+                <DEF> ::= function <IDENTIFIER> make-id ( <FORMALS> make-formals ) : <TYPE>
+                             <BODY> make-def
+
+            <FORMALS> ::= ε
+                        | <NONEMPTYFORMALS>
+
+    <NONEMPTYFORMALS> ::= <FORMAL> make-formal <NONEMPTYFORMAL-TAIL>
+                        
+
+ <NONEMPTYFORMAL-TAIL> ::= , <NONEMPTYFORMAL>
+			| ε
+
+             <FORMAL> ::= <IDENTIFIER> make-id : <TYPE>
+
+               <BODY> ::= <PRINT-STATEMENT> <BODY> make-body
+                        | <EXPR>
+
+               <TYPE> ::= integer make-integer
+                        | boolean make-boolean
+
+	       <EXPR> ::= <SIMPLE-EXPR> <EXPR-TAIL>
+
+	  <EXPR-TAIL> ::= < <SIMPLE-EXPR> make-< <EXPR-TAIL>
+		        | = <SIMPLE-EXPR> make-= <EXPR-TAIL>
+		        | ε 
+
+        <SIMPLE-EXPR> ::= <TERM> <SIMPLE-EXPR-TAIL>
+  
+
+   <SIMPLE-EXPR-TAIL> ::= or <TERM> make-or <SIMPLE-EXPR-TAIL>
+		        | + <TERM> make-+ <SIMPLE-EXPR-TAIL>
+		        | - <TERM> make-- <SIMPLE-EXPR-TAIL>
+			| ε
+
+	       <TERM> ::= <FACTOR> <TERM-TAIL>
+
+	  <TERM-TAIL> ::= and <FACTOR> make-and <TERM-TAIL>
+		        | * <FACTOR> make-* <TERM-TAIL>
+		        | / <FACTOR> make-/ <TERM-TAIL>
+		        | ε
+
+             <FACTOR> ::= if <EXPR> then <EXPR> else <EXPR> make-if
+                        | not <FACTOR> make-not
+                        | <IDENTIFIER> make-id <FACTOR-TAIL> 
+                        | <LITERAL>
+                        | - <FACTOR> make-negate
+                        | ( <EXPR> )
+
+	<FACTOR-TAIL> ::= ( <ACTUALS> make-actuals ) make-functCall
+			| ε
+
+            <ACTUALS> ::= ε
+                        | <NONEMPTYACTUALS>
+
+    <NONEMPTYACTUALS> ::= <EXPR> <NONEMPTYACT-TAIL>
+
+   <NONEMPTYACT-TAIL> ::= , <NONEMPTYACTUALS>
+			| ε
+
+            <LITERAL> ::= <NUMBER> make-NUM
+                        | <BOOLEAN> make-BOOL
+
+    <PRINT-STATEMENT> ::= print ( <EXPR> ) make-print
+
+
+Semantic Action Changes:
+	Program Node - Contains a Definitions Node
+	Definitions Node - Contains a list of Def Nodes
+	Def Node - Contains a function made up of an id Node, a Formals Node, a Type Node, and a Body Node
+	Formals Node - Contains a list of Formal Nodes
+	Formal Node - Contains an id Node and a Type Node
+	Type Node - Implementation depending, will be a superclass or interface for integer and boolean
+	Body Node- Contains a list of Print Nodes and an expression
+	Print Node - Contains an expression
+	Binary Node - or and < = + - * / Node 
+	Unary Node - not negate Node
+	If Node - Contains three expressions
+	FunctCall Node - Contains an id Node and an Actuals Node
+	Actuals Node - Contains a list of expressions
+	id Node - Contains and identifier
+	NUM Node - Contains a NUMBER
+	BOOL Node - Contains a BOOLEAN
